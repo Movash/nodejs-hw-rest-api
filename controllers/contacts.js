@@ -3,7 +3,16 @@ const { Contact } = require("../models/contact");
 const { HttpError, ctrlWrapper } = require("../helpers");
 
 const allContacts = async (req, res) => {
-  const allContacts = await Contact.find();
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 20, favorite } = req.query;
+  const skip = (page - 1) * limit
+
+  const filter = { owner };
+  if (favorite !== undefined) {
+    filter.favorite = favorite;
+  }
+  
+  const allContacts = await Contact.find(filter, null, { skip, limit });
   res.json(allContacts);
 };
 
@@ -17,8 +26,8 @@ const oneContact = async (req, res) => {
 };
 
 const newContact = async (req, res) => {
-  const { name, email, phone, favorite } = req.body;
-  const newContact = await Contact.create({ name, email, phone, favorite });
+  const {_id: owner} = req.user
+  const newContact = await Contact.create({ ...req.body, owner });
   res.status(201).json(newContact);
 };
 
