@@ -3,6 +3,9 @@ const validateFavorite = require("./validateFavorite")
 const isValidId = require("./isValidId")
 const authenticate = require("./authenticate");
 const verifyContactOwner = require("./verifyContactOwner");
+const verifyOwner = require("./verifyOwner");
+const upload = require("./upload")
+const avatarImageCheck = require("./avatarImageCheck");
 
 module.exports = {
   validateBody,
@@ -10,4 +13,7 @@ module.exports = {
   validateFavorite,
   authenticate,
   verifyContactOwner,
+  verifyOwner,
+  upload,
+  avatarImageCheck,
 };

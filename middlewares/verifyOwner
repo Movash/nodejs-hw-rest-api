@@ -1,0 +1,17 @@
+const { Types: { ObjectId } } = require('mongoose');
+const { HttpError } = require("../helpers");
+
+const verifyOwner = (req, res, next) => {
+  const { _id } = req.user;
+  const { id } = req.params;
+
+  const objectIdFromId = new ObjectId(id);
+
+  if (!_id.equals(objectIdFromId)) {
+    return next(HttpError(403, "Permission denied"));
+  }
+
+  next();
+};
+
+module.exports = verifyOwner;
