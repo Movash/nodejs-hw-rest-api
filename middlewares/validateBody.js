@@ -9,7 +9,7 @@ const validateBody = (schema) => {
     if (error) {
       const someError = error.details[0];
       let errorMsg;
-      console.log(someError)
+      
       if (Object.keys(req.body).length === 0) {
         errorMsg = `Missing fields`;
       } else if (someError.type === "any.required") {
